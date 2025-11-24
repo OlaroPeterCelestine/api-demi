@@ -5,10 +5,11 @@ A simple CRUD (Create, Read, Update, Delete) API built with Fastify.
 ## Features
 
 - ✅ Full CRUD operations for items
+- ✅ PostgreSQL database integration
 - ✅ JSON Schema validation
 - ✅ Request logging
 - ✅ Error handling
-- ✅ Health check endpoint
+- ✅ Health check endpoint with database status
 
 ## Installation
 
@@ -29,6 +30,27 @@ npm start
 ```
 
 The server will start on `http://localhost:3000`
+
+## Database
+
+This API uses **PostgreSQL** for persistent data storage. The database connection is configured via the `DATABASE_URL` environment variable.
+
+### Database Schema
+
+The `items` table is automatically created on server startup with the following structure:
+
+- `id` - SERIAL PRIMARY KEY
+- `name` - VARCHAR(255) NOT NULL
+- `description` - TEXT
+- `price` - DECIMAL(10, 2) DEFAULT 0
+- `created_at` - TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+- `updated_at` - TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
+### Environment Variables
+
+- `DATABASE_URL` - PostgreSQL connection string (defaults to Railway database)
+- `PORT` - Server port (defaults to 3000)
+- `HOST` - Server host (defaults to 0.0.0.0)
 
 ## API Endpoints
 
@@ -146,9 +168,10 @@ The `render.yaml` file is already configured, so Render will automatically use t
 
 ## Notes
 
-- This API uses an in-memory data store. Data will be lost when the server restarts.
-- For production use, replace the in-memory store with a proper database (PostgreSQL, MongoDB, etc.).
+- This API uses PostgreSQL for persistent data storage. Data persists across server restarts.
+- The database table is automatically created on first server startup.
 - JSON Schema validation ensures request data integrity.
 - The server automatically uses the `PORT` environment variable provided by Render.
+- Database connection string can be configured via the `DATABASE_URL` environment variable.
 
 # api-demi
