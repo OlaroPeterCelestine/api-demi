@@ -79,6 +79,24 @@ const itemIdSchema = {
 
 // Routes
 
+// GET / - API information
+fastify.get('/', async (request, reply) => {
+  return {
+    name: 'Fastify CRUD API',
+    version: '1.0.0',
+    description: 'A RESTful API for managing items with PostgreSQL',
+    endpoints: {
+      health: 'GET /health - Check server and database status',
+      getItems: 'GET /items - Get all items',
+      getItem: 'GET /items/:id - Get a single item',
+      createItem: 'POST /items - Create a new item',
+      updateItem: 'PUT /items/:id - Update an item',
+      deleteItem: 'DELETE /items/:id - Delete an item'
+    },
+    documentation: 'See README.md for detailed API documentation'
+  };
+});
+
 // GET /items - Get all items
 fastify.get('/items', async (request, reply) => {
   const client = await fastify.pg.connect();
